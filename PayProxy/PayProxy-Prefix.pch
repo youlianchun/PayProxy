@@ -1,0 +1,23 @@
+//
+//  PayProxy-Prefix.pch
+//  PayProxy
+//
+//  Created by YLCHUN on 2018/1/5.
+//  Copyright © 2018年 lrlz. All rights reserved.
+//
+
+/* Definition of `C_EXTERN'. */
+#if !defined(C_EXTERN)
+#  if defined(__cplusplus)
+#   define C_EXTERN extern "C"
+#  else
+#   define C_EXTERN extern
+#  endif
+#endif /* !defined(C_EXTERN) */
+
+#ifndef PayProxy_Prefix_pch
+#define PayProxy_Prefix_pch
+
+#import <UIKit/UIKit.h>
+
+#endif /* PayProxy_Prefix_pch */

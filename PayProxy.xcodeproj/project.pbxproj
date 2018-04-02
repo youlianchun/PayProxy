@@ -1,0 +1,485 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8AD525218DB7E4FB7FE56E20 /* libPods-PayProxy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23861FFDDA34758300AB2D73 /* libPods-PayProxy.a */; };
+		A951565C20720CD60096ED9B /* Singleton.mm in Sources */ = {isa = PBXBuildFile; fileRef = A951565820720CD60096ED9B /* Singleton.mm */; };
+		A951565D20720CD60096ED9B /* PayProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = A951565A20720CD60096ED9B /* PayProxy.m */; };
+		A9C03B802071D9A800B969CB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C03B7F2071D9A800B969CB /* AppDelegate.m */; };
+		A9C03B832071D9A800B969CB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C03B822071D9A800B969CB /* ViewController.m */; };
+		A9C03B862071D9A800B969CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9C03B842071D9A800B969CB /* Main.storyboard */; };
+		A9C03B882071D9A900B969CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9C03B872071D9A900B969CB /* Assets.xcassets */; };
+		A9C03B8B2071D9A900B969CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9C03B892071D9A900B969CB /* LaunchScreen.storyboard */; };
+		A9C03B8E2071D9A900B969CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C03B8D2071D9A900B969CB /* main.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0FA34F7A39E36AE5D18F63D1 /* Pods-PayProxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PayProxy.release.xcconfig"; path = "Pods/Target Support Files/Pods-PayProxy/Pods-PayProxy.release.xcconfig"; sourceTree = "<group>"; };
+		23861FFDDA34758300AB2D73 /* libPods-PayProxy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PayProxy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B6FBEAC45C79243E33D3F82 /* Pods-PayProxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PayProxy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PayProxy/Pods-PayProxy.debug.xcconfig"; sourceTree = "<group>"; };
+		A9515653207206E90096ED9B /* PayProxy-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PayProxy-Prefix.pch"; sourceTree = "<group>"; };
+		A951565820720CD60096ED9B /* Singleton.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Singleton.mm; sourceTree = "<group>"; };
+		A951565920720CD60096ED9B /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		A951565A20720CD60096ED9B /* PayProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PayProxy.m; sourceTree = "<group>"; };
+		A951565B20720CD60096ED9B /* PayProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PayProxy.h; sourceTree = "<group>"; };
+		A9C03B7B2071D9A800B969CB /* PayProxy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PayProxy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9C03B7E2071D9A800B969CB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A9C03B7F2071D9A800B969CB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A9C03B812071D9A800B969CB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		A9C03B822071D9A800B969CB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		A9C03B852071D9A800B969CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A9C03B872071D9A900B969CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9C03B8A2071D9A900B969CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A9C03B8C2071D9A900B969CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9C03B8D2071D9A900B969CB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9C03B782071D9A800B969CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD525218DB7E4FB7FE56E20 /* libPods-PayProxy.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		132E191550C1F2CD6296692E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				23861FFDDA34758300AB2D73 /* libPods-PayProxy.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2A037F129C7F0221289F8A51 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B6FBEAC45C79243E33D3F82 /* Pods-PayProxy.debug.xcconfig */,
+				0FA34F7A39E36AE5D18F63D1 /* Pods-PayProxy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A951565720720CD60096ED9B /* PayProxy */ = {
+			isa = PBXGroup;
+			children = (
+				A951565920720CD60096ED9B /* Singleton.h */,
+				A951565820720CD60096ED9B /* Singleton.mm */,
+				A951565B20720CD60096ED9B /* PayProxy.h */,
+				A951565A20720CD60096ED9B /* PayProxy.m */,
+			);
+			path = PayProxy;
+			sourceTree = "<group>";
+		};
+		A9C03B722071D9A800B969CB = {
+			isa = PBXGroup;
+			children = (
+				A9C03B7D2071D9A800B969CB /* PayProxy */,
+				A9C03B7C2071D9A800B969CB /* Products */,
+				2A037F129C7F0221289F8A51 /* Pods */,
+				132E191550C1F2CD6296692E /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A9C03B7C2071D9A800B969CB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9C03B7B2071D9A800B969CB /* PayProxy.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9C03B7D2071D9A800B969CB /* PayProxy */ = {
+			isa = PBXGroup;
+			children = (
+				A951565720720CD60096ED9B /* PayProxy */,
+				A9C03B812071D9A800B969CB /* ViewController.h */,
+				A9C03B822071D9A800B969CB /* ViewController.m */,
+				A9C03B7E2071D9A800B969CB /* AppDelegate.h */,
+				A9C03B7F2071D9A800B969CB /* AppDelegate.m */,
+				A9C03B842071D9A800B969CB /* Main.storyboard */,
+				A9C03B872071D9A900B969CB /* Assets.xcassets */,
+				A9C03B892071D9A900B969CB /* LaunchScreen.storyboard */,
+				A9515653207206E90096ED9B /* PayProxy-Prefix.pch */,
+				A9C03B8C2071D9A900B969CB /* Info.plist */,
+				A9C03B8D2071D9A900B969CB /* main.m */,
+			);
+			path = PayProxy;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9C03B7A2071D9A800B969CB /* PayProxy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9C03B912071D9A900B969CB /* Build configuration list for PBXNativeTarget "PayProxy" */;
+			buildPhases = (
+				473CFE5BF3F9E0517FF54A9E /* [CP] Check Pods Manifest.lock */,
+				A9C03B772071D9A800B969CB /* Sources */,
+				A9C03B782071D9A800B969CB /* Frameworks */,
+				A9C03B792071D9A800B969CB /* Resources */,
+				AA879B47FE33E09767B4F27D /* [CP] Embed Pods Frameworks */,
+				3F2C0B2185BF38167C1E7680 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PayProxy;
+			productName = PayProxy;
+			productReference = A9C03B7B2071D9A800B969CB /* PayProxy.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9C03B732071D9A800B969CB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0930;
+				ORGANIZATIONNAME = YLCHUN;
+				TargetAttributes = {
+					A9C03B7A2071D9A800B969CB = {
+						CreatedOnToolsVersion = 9.3;
+					};
+				};
+			};
+			buildConfigurationList = A9C03B762071D9A800B969CB /* Build configuration list for PBXProject "PayProxy" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A9C03B722071D9A800B969CB;
+			productRefGroup = A9C03B7C2071D9A800B969CB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9C03B7A2071D9A800B969CB /* PayProxy */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9C03B792071D9A800B969CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9C03B8B2071D9A900B969CB /* LaunchScreen.storyboard in Resources */,
+				A9C03B882071D9A900B969CB /* Assets.xcassets in Resources */,
+				A9C03B862071D9A800B969CB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3F2C0B2185BF38167C1E7680 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PayProxy/Pods-PayProxy-resources.sh",
+				"${PODS_ROOT}/AliPay/AlipaySDK.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/AlipaySDK.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PayProxy/Pods-PayProxy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		473CFE5BF3F9E0517FF54A9E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PayProxy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AA879B47FE33E09767B4F27D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PayProxy/Pods-PayProxy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9C03B772071D9A800B969CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A951565C20720CD60096ED9B /* Singleton.mm in Sources */,
+				A951565D20720CD60096ED9B /* PayProxy.m in Sources */,
+				A9C03B832071D9A800B969CB /* ViewController.m in Sources */,
+				A9C03B8E2071D9A900B969CB /* main.m in Sources */,
+				A9C03B802071D9A800B969CB /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A9C03B842071D9A800B969CB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9C03B852071D9A800B969CB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A9C03B892071D9A900B969CB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A9C03B8A2071D9A900B969CB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A9C03B8F2071D9A900B969CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A9C03B902071D9A900B969CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9C03B922071D9A900B969CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7B6FBEAC45C79243E33D3F82 /* Pods-PayProxy.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				GCC_PREFIX_HEADER = "PayProxy/PayProxy-Prefix.pch";
+				INFOPLIST_FILE = PayProxy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"c++\"",
+					"-l\"sqlite3.0\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AlipaySDK\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ylchun.PayProxy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9C03B932071D9A900B969CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FA34F7A39E36AE5D18F63D1 /* Pods-PayProxy.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				GCC_PREFIX_HEADER = "PayProxy/PayProxy-Prefix.pch";
+				INFOPLIST_FILE = PayProxy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"WeChatSDK\"",
+					"-l\"c++\"",
+					"-l\"sqlite3.0\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AlipaySDK\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ylchun.PayProxy;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9C03B762071D9A800B969CB /* Build configuration list for PBXProject "PayProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9C03B8F2071D9A900B969CB /* Debug */,
+				A9C03B902071D9A900B969CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9C03B912071D9A900B969CB /* Build configuration list for PBXNativeTarget "PayProxy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9C03B922071D9A900B969CB /* Debug */,
+				A9C03B932071D9A900B969CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A9C03B732071D9A800B969CB /* Project object */;
+}
