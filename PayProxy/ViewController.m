@@ -22,7 +22,7 @@
 
 - (void)wxPay {
     NSDictionary *signData = @{};//服务器签名后的数据
-    [PayProxy wxPay:signData res:^(BOOL success) {
+    [PayProxy wxPay:signData callback:^(BOOL success) {
         if (success) {
             //支付成功 ...
         }else {
@@ -33,7 +33,7 @@
 
 - (void)aliPay {
     NSString *signData = @"";//服务器签名后的数据
-    [PayProxy aliPay:signData res:^(BOOL success) {
+    [PayProxy aliPay:signData callback:^(BOOL success) {
         if (success) {
             //支付成功 ...
         }else {

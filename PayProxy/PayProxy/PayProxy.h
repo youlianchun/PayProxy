@@ -5,10 +5,10 @@
 //  Created by YLCHUN on 2018/3/28.
 //  Copyright © 2018年 lrlz. All rights reserved.
 //
+//  自带接入错误校验
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
-typedef void(^PayResult)(BOOL success);
 
 @interface PayProxy : Singleton
 @end
@@ -42,15 +42,15 @@ typedef void(^PayResult)(BOOL success);
  微信支付
 
  @param signData 签名后的数据
- @param res 支付回调
+ @param callback 支付回调
  */
-+(void)wxPay:(NSDictionary*)signData res:(PayResult)res;
++(void)wxPay:(NSDictionary*)signData callback:(void(^)(BOOL success))callback;
 
 /**
  支付宝支付
  
  @param signData 签名后的数据
- @param res 支付回调
+ @param callback 支付回调
  */
-+(void)aliPay:(NSString*)signData res:(PayResult)res;
++(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback;
 @end

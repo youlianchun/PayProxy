@@ -1,6 +1,6 @@
 //
 //  PayProxy.m
-//  PayProxy
+//  JYC
 //
 //  Created by YLCHUN on 2018/3/28.
 //  Copyright © 2018年 lrlz. All rights reserved.
@@ -16,7 +16,8 @@ static NSString * const kaliPay = @"aliPay";
 @interface PayProxy()<WXApiDelegate>
 {
     NSString *_payType;
-    PayResult _result;
+    void(^_callback)(BOOL success);
+
     NSString *_wxAppkey;
     NSString *_aliAppkey;
 }
@@ -34,9 +35,9 @@ static NSString * const kaliPay = @"aliPay";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    if (_payType)
+    if (_payType == kwxPay || _payType == kaliPay)
     {
-        [self logErr:-99 msg:@"用户放弃支付：其他途径返回app。"];
+        [self logErr:-99 msg:@"用户放弃支付：其他途径返回app"];
         [self callPayResult:NO];
     }
 }
@@ -52,10 +53,14 @@ static NSString * const kaliPay = @"aliPay";
     _aliAppkey = appKey;
 }
 
--(void)wxPay:(NSDictionary*)signData res:(PayResult)res
+-(void)wxPay:(NSDictionary*)signData callback:(void(^)(BOOL success))callback
 {
-    _result = res;
     _payType = kwxPay;
+    _callback = callback;
+    if (_wxAppkey.length == 0) {
+        [self regErr];
+        return;
+    }
     PayReq *request = [[PayReq alloc] init];
     request.partnerId = signData[@"partnerid"];
     request.prepayId = signData[@"prepayid"];
@@ -63,17 +68,20 @@ static NSString * const kaliPay = @"aliPay";
     request.nonceStr = signData[@"noncestr"];
     request.timeStamp = [signData[@"timestamp"] unsignedIntValue];
     request.sign = signData[@"sign"];
-    if (![WXApi sendReq:request])
-    {
+    if (![WXApi sendReq:request]) {
         [self logErr:WXErrCodeCommon msg:@"原因：签名数据错误。"];
         [self callPayResult:NO];
     }
 }
 
--(void)aliPay:(NSString*)signData res:(PayResult)res
+-(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback
 {
-    _result = res;
     _payType = kaliPay;
+    _callback = callback;
+    if (_aliAppkey.length == 0) {
+        [self regErr];
+        return;
+    }
     [[AlipaySDK defaultService] payOrder:signData fromScheme:_aliAppkey callback:[self aliPayCallback]];
 }
 
@@ -81,6 +89,11 @@ static NSString * const kaliPay = @"aliPay";
 {
     if ([self alipayHandleOpenURL:url]) return YES;
     if ([self wxpayHandleOpenURL:url]) return YES;
+    return NO;
+}
+
+-(BOOL)verifyHandleOpenURL:(NSURL *) url
+{
     return NO;
 }
 
@@ -132,11 +145,11 @@ static NSString * const kaliPay = @"aliPay";
 -(void)callPayResult:(BOOL) success
 {
     _payType = nil;
-    if (_result)
+    if (_callback)
     {
-        PayResult result = _result;
-        _result = nil;
-        result(success);
+        void(^callback)(BOOL success) = _callback;
+        _callback = nil;
+        callback(success);
     }
 }
 
@@ -145,27 +158,121 @@ static NSString * const kaliPay = @"aliPay";
     NSLog(@"PayProxyError: %@, code: %d, message: %@", _payType, code, msg);
 }
 
+-(void)regErr
+{
+    NSString *clsStr = NSStringFromClass([[UIApplication sharedApplication].delegate class]);
+    NSString *err = [NSString stringWithFormat:@"原因：PayProxy尚未注册Appkey。请检查 -[%@ application: didFinishLaunchingWithOptions: ]", clsStr];
+    [self logErr:-100 msg:err];
+    [self callPayResult:NO];
+}
+
 @end
 
-@implementation PayProxy(extension)
+#pragma mark - verify 接入校验
+
+@implementation PayProxy (verify)
+static NSString * const kverify = @"verify";
+static NSString * const kverifyKey = @"PayProxy";
+
+-(void)verify
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        __weak typeof(self) wself = self;
+        [self verify_8:^(BOOL s8) {
+            [wself verify_9:^(BOOL s9) {
+                if (!s8 || !s9) {
+                    [wself verifyErr];
+                }
+            }];
+        }];
+    });
+}
+
+-(void)verifyErr
+{
+    NSString *clsStr = NSStringFromClass([[UIApplication sharedApplication].delegate class]);
+    NSString *err = [NSString stringWithFormat:@"PayProxyError: 请检App OpenURL查代理是否执行 +[PayProxy handleOpenURL:] \n\
+                     -[%@ delegate application: openURL: sourceApplication: annotation: ]\n\
+                     -[%@ application: openURL: options: ]", clsStr, clsStr];
+    NSLog(@"%@", err);
+}
+
+-(void)verify_8:(void(^)(BOOL success))callback
+{
+    _callback = callback;
+    _payType = kverify;
+    UIApplication *application = [UIApplication sharedApplication];
+    id<UIApplicationDelegate> appDelegate = application.delegate;
+    if ([appDelegate respondsToSelector:@selector(application:openURL:sourceApplication:annotation:)]) {
+        NSURL *url = [self verifyOpenURL];
+        [self performSelector:@selector(handleErr) withObject:nil afterDelay:0.0001];
+        [appDelegate application:application openURL:url sourceApplication:@"" annotation:[NSNull new]];
+    }else {
+        [self handleErr];
+    }
+}
+
+-(void)verify_9:(void(^)(BOOL success))callback
+{
+    _callback = callback;
+    _payType = kverify;
+    UIApplication *application = [UIApplication sharedApplication];
+    id<UIApplicationDelegate> appDelegate = application.delegate;
+    if ([appDelegate respondsToSelector:@selector(application:openURL:options:)]) {
+        NSURL *url = [self verifyOpenURL];
+        [self performSelector:@selector(handleErr) withObject:nil afterDelay:0.0001];
+        [appDelegate application:application openURL:url options:@{}];
+    }else {
+        [self handleErr];
+    }
+}
+
+-(NSURL*)verifyOpenURL
+{
+    return [NSURL URLWithString:[NSString stringWithFormat:@"%@://", kverifyKey]];
+}
+
+-(void)handleErr
+{
+    [self callPayResult:NO];
+}
+
+-(BOOL)verifyHandleOpenURL:(NSURL *) url
+{
+    if (_payType == kverify && [url.scheme isEqualToString:kverifyKey]) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleErr) object:nil];
+        [self callPayResult:YES];
+        return YES;
+    }
+    return NO;
+}
+@end
+
+#pragma mark - extension 方法扩展
+@implementation PayProxy (extension)
 +(instancetype)share {
     return [[self alloc] init];
 }
-
 +(BOOL)handleOpenURL:(NSURL *) url {
-    return [[PayProxy share] handleOpenURL:url];
+    if ([[PayProxy share] handleOpenURL:url])  return YES;
+    if ([[PayProxy share] verifyHandleOpenURL:url]) return YES;
+    return NO;
 }
 +(void)registerWXAppKey:(NSString *)appKey {
     [[PayProxy share] registerWXAppKey:appKey];
+    [[PayProxy share] verify];
 }
 +(void)registerAliAppKey:(NSString *)appKey {
     [[PayProxy share] registerAliAppKey:appKey];
+    [[PayProxy share] verify];
 }
-+(void)wxPay:(NSDictionary*)signData res:(PayResult)res {
-    [[PayProxy share] wxPay:signData res:res];
++(void)wxPay:(NSDictionary*)signData callback:(void(^)(BOOL success))callback {
+    [[PayProxy share] wxPay:signData callback:callback];
 }
-+(void)aliPay:(NSString*)signData res:(PayResult)res {
-    [[PayProxy share] aliPay:signData res:res];
++(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback {
+    [[PayProxy share] aliPay:signData callback:callback];
 }
 @end
+
 
