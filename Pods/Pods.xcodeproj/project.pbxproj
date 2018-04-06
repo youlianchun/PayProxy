@@ -13,20 +13,20 @@
 
 /* Begin PBXFileReference section */
 		0C248FF7BE96AC67CF4139F3AC04D8B5 /* Pods-PayProxy-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PayProxy-dummy.m"; sourceTree = "<group>"; };
-		11DF3F222C2D00E35E005E2FCBD3AF9E /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = OpenSDK1.8.1/WechatAuthSDK.h; sourceTree = "<group>"; };
 		13881610CC9768D3479B49F48818D65C /* Pods-PayProxy-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PayProxy-frameworks.sh"; sourceTree = "<group>"; };
-		1FE5BD6B4DEC50EB3D6B427CF33A876C /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = OpenSDK1.8.1/WXApiObject.h; sourceTree = "<group>"; };
+		16C6115506546044AD6372C5B0B674E5 /* WechatAuthSDK.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WechatAuthSDK.h; path = WechatSDK1.8.2/WechatAuthSDK.h; sourceTree = "<group>"; };
 		2F43EF782DB267110A59EE0F7E2DD4C1 /* Pods-PayProxy-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PayProxy-acknowledgements.plist"; sourceTree = "<group>"; };
+		44FDC0BF0D64AFED9A6CE5363C449CC6 /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = WechatSDK1.8.2/WXApi.h; sourceTree = "<group>"; };
 		5907281077E05F6BF5ADD0294238DB22 /* Pods-PayProxy-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PayProxy-resources.sh"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		7AED55B4E64C1492BD97EE237931C25F /* Pods-PayProxy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PayProxy.debug.xcconfig"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A7801E7D1E36D1A02A76249C8CAFA421 /* libPods-PayProxy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-PayProxy.a"; path = "libPods-PayProxy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB6FEE80B7E6452ABDEF4334BDF28FA3 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = OpenSDK1.8.1/libWeChatSDK.a; sourceTree = "<group>"; };
 		AD04948815AF5E7AEB87B200555EAEA1 /* Pods-PayProxy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PayProxy.release.xcconfig"; sourceTree = "<group>"; };
 		BDA8849D64F10699300D1B66CFE74293 /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlipaySDK.framework; sourceTree = "<group>"; };
+		C20612BB204BDDD557B6B7DD982E64EE /* WXApiObject.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApiObject.h; path = WechatSDK1.8.2/WXApiObject.h; sourceTree = "<group>"; };
 		CBD3E81C34208C037DFB6CFADA428BAC /* Pods-PayProxy-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PayProxy-acknowledgements.markdown"; sourceTree = "<group>"; };
-		D1559578C49806AFE5375A35A3D397CF /* WXApi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = WXApi.h; path = OpenSDK1.8.1/WXApi.h; sourceTree = "<group>"; };
+		D6D331C5BB5E8F6D1BB4058DABEB3416 /* libWeChatSDK.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = libWeChatSDK.a; path = WechatSDK1.8.2/libWeChatSDK.a; sourceTree = "<group>"; };
 		E957BF40154750398361220E9AAF8CC6 /* AlipaySDK.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; path = AlipaySDK.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -42,6 +42,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		222B9C92F5631F68118FA08C7E2D60F6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D6D331C5BB5E8F6D1BB4058DABEB3416 /* libWeChatSDK.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		25BFE95944010BD56DD22C1E904EEC92 /* AliPay */ = {
 			isa = PBXGroup;
 			children = (
@@ -58,18 +66,6 @@
 				BDA8849D64F10699300D1B66CFE74293 /* AlipaySDK.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		3305B1A327AF887B551FA8E9F6A26B3F /* WechatOpenSDK */ = {
-			isa = PBXGroup;
-			children = (
-				11DF3F222C2D00E35E005E2FCBD3AF9E /* WechatAuthSDK.h */,
-				D1559578C49806AFE5375A35A3D397CF /* WXApi.h */,
-				1FE5BD6B4DEC50EB3D6B427CF33A876C /* WXApiObject.h */,
-				C8D01AA1C0D4EB4DB3158C87D902FD3B /* Frameworks */,
-			);
-			name = WechatOpenSDK;
-			path = WechatOpenSDK;
 			sourceTree = "<group>";
 		};
 		35CBDCBD58BFCB08F110F2F8979A373F /* Pods-PayProxy */ = {
@@ -91,7 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				25BFE95944010BD56DD22C1E904EEC92 /* AliPay */,
-				3305B1A327AF887B551FA8E9F6A26B3F /* WechatOpenSDK */,
+				67ACEE71358DAFEE0DC159CAD45E2AF9 /* WechatOpenSDK */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -102,6 +98,18 @@
 				A7801E7D1E36D1A02A76249C8CAFA421 /* libPods-PayProxy.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		67ACEE71358DAFEE0DC159CAD45E2AF9 /* WechatOpenSDK */ = {
+			isa = PBXGroup;
+			children = (
+				16C6115506546044AD6372C5B0B674E5 /* WechatAuthSDK.h */,
+				44FDC0BF0D64AFED9A6CE5363C449CC6 /* WXApi.h */,
+				C20612BB204BDDD557B6B7DD982E64EE /* WXApiObject.h */,
+				222B9C92F5631F68118FA08C7E2D60F6 /* Frameworks */,
+			);
+			name = WechatOpenSDK;
+			path = WechatOpenSDK;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -137,14 +145,6 @@
 				35CBDCBD58BFCB08F110F2F8979A373F /* Pods-PayProxy */,
 			);
 			name = "Targets Support Files";
-			sourceTree = "<group>";
-		};
-		C8D01AA1C0D4EB4DB3158C87D902FD3B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AB6FEE80B7E6452ABDEF4334BDF28FA3 /* libWeChatSDK.a */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {

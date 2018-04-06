@@ -92,11 +92,6 @@ static NSString * const kaliPay = @"aliPay";
     return NO;
 }
 
--(BOOL)verifyHandleOpenURL:(NSURL *) url
-{
-    return NO;
-}
-
 -(BOOL)wxpayHandleOpenURL:(NSURL *) url
 {
     if (_payType == kwxPay && [url.scheme isEqualToString:_wxAppkey]) {
@@ -172,81 +167,70 @@ static NSString * const kaliPay = @"aliPay";
 
 @implementation PayProxy (verify)
 static NSString * const kverify = @"verify";
-static NSString * const kverifyKey = @"PayProxy";
 
 -(void)verify
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        __weak typeof(self) wself = self;
-        [self verify_8:^(BOOL s8) {
-            [wself verify_9:^(BOOL s9) {
-                if (!s8 || !s9) {
-                    [wself verifyErr];
-                }
-            }];
-        }];
+        if (![self verify_89] || ![self verify_9n]) {
+            NSString *clsStr = NSStringFromClass([[UIApplication sharedApplication].delegate class]);
+            NSString *err = [NSString stringWithFormat:@"PayProxyError: 请检App OpenURL查代理是否执行 +[PayProxy handleOpenURL:] \n\
+                             -[%@ delegate application: openURL: sourceApplication: annotation: ]\n\
+                             -[%@ delegate application: handleOpenURL: ]\n\
+                             -[%@ application: openURL: options: ]", clsStr, clsStr, clsStr];
+            NSLog(@"%@", err);
+        }
     });
 }
 
--(void)verifyErr
+-(BOOL)verify_89
 {
-    NSString *clsStr = NSStringFromClass([[UIApplication sharedApplication].delegate class]);
-    NSString *err = [NSString stringWithFormat:@"PayProxyError: 请检App OpenURL查代理是否执行 +[PayProxy handleOpenURL:] \n\
-                     -[%@ delegate application: openURL: sourceApplication: annotation: ]\n\
-                     -[%@ application: openURL: options: ]", clsStr, clsStr];
-    NSLog(@"%@", err);
+    BOOL v_29 = [self verify:@selector(application:handleOpenURL:) perform:^(UIApplication *application, NSURL *url) {
+        [application.delegate application:application handleOpenURL:url];
+    }];
+    if (v_29) return YES;
+    
+    BOOL v_49 = [self verify:@selector(application:openURL:sourceApplication:annotation:) perform:^(UIApplication *application, NSURL *url) {
+        [application.delegate application:application openURL:url sourceApplication:@"" annotation:[NSNull new]];
+    }];
+    if (v_49) return YES;
+    
+    return NO;
 }
 
--(void)verify_8:(void(^)(BOOL success))callback
+-(BOOL)verify_9n
 {
-    _callback = callback;
+//    if (@available(iOS 9.0, *)) {
+       return [self verify:@selector(application:openURL:options:) perform:^(UIApplication *application, NSURL *url) {
+           [application.delegate application:application openURL:url options:@{}];
+        }];
+//    } else {
+//        return YES;
+//    }
+}
+
+-(BOOL)verify:(SEL)sel perform:(void(^)(UIApplication *application, NSURL *url))perform
+{
     _payType = kverify;
     UIApplication *application = [UIApplication sharedApplication];
-    id<UIApplicationDelegate> appDelegate = application.delegate;
-    if ([appDelegate respondsToSelector:@selector(application:openURL:sourceApplication:annotation:)]) {
-        NSURL *url = [self verifyOpenURL];
-        [self performSelector:@selector(handleErr) withObject:nil afterDelay:0.0001];
-        [appDelegate application:application openURL:url sourceApplication:@"" annotation:[NSNull new]];
-    }else {
-        [self handleErr];
+    if ([application.delegate respondsToSelector:sel]) {
+        NSURL *url = [NSURL URLWithString:@"payProxyVerify://"];
+        perform(application, url);
     }
-}
-
--(void)verify_9:(void(^)(BOOL success))callback
-{
-    _callback = callback;
-    _payType = kverify;
-    UIApplication *application = [UIApplication sharedApplication];
-    id<UIApplicationDelegate> appDelegate = application.delegate;
-    if ([appDelegate respondsToSelector:@selector(application:openURL:options:)]) {
-        NSURL *url = [self verifyOpenURL];
-        [self performSelector:@selector(handleErr) withObject:nil afterDelay:0.0001];
-        [appDelegate application:application openURL:url options:@{}];
-    }else {
-        [self handleErr];
-    }
-}
-
--(NSURL*)verifyOpenURL
-{
-    return [NSURL URLWithString:[NSString stringWithFormat:@"%@://", kverifyKey]];
-}
-
--(void)handleErr
-{
-    [self callPayResult:NO];
+    BOOL success = !_payType;
+    _payType = nil;
+    return success;
 }
 
 -(BOOL)verifyHandleOpenURL:(NSURL *) url
 {
-    if (_payType == kverify && [url.scheme isEqualToString:kverifyKey]) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(handleErr) object:nil];
-        [self callPayResult:YES];
+    if (_payType == kverify) {
+        _payType = nil;
         return YES;
     }
     return NO;
 }
+
 @end
 
 #pragma mark - extension 方法扩展

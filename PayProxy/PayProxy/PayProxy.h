@@ -6,6 +6,7 @@
 //  Copyright © 2018年 lrlz. All rights reserved.
 //
 //  自带接入错误校验
+//  白名单配置 Info.plist[@"LSApplicationQueriesSchemes"] >= @[@"weixin", @"alipay"]
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"

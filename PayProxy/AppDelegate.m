@@ -19,6 +19,7 @@ static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
 
 @implementation AppDelegate
 
+
 -(void)registerPayProxy {
     [PayProxy registerWXAppKey:kWxPayKey];
     [PayProxy registerAliAppKey:kAliPayKey];
