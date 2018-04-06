@@ -35,12 +35,13 @@ static UIViewController* currentViewController()
 }
 
 
-@interface ApplePay ()<PKPaymentAuthorizationViewControllerDelegate>
+@interface ApplePay ()<PKPaymentAuthorizationViewControllerDelegate, NSURLSessionDelegate>
 {
-    void(^_authCallback)(NSData *token, void(^authRet)(BOOL success, NSString* errMsg));
+//    void(^_authCallback)(NSData *token, void(^authRet)(BOOL success, NSString *errMsg));
     void(^_callback)(BOOL success);
     BOOL _paySuccess;
     NSString *_merchantId;
+    NSString *_authUrl;
 }
 @end
 
@@ -48,10 +49,17 @@ static UIViewController* currentViewController()
 +(instancetype)share {
     return [[ApplePay alloc] init];
 }
--(void)setMerchantId:(NSString*)merchantId serverAuth:(void(^)(NSData *token, void(^authRet)(BOOL success, NSString* errMsg)))authCallback
+
+//-(void)setMerchantId:(NSString*)merchantId serverAuth:(void(^)(NSData *token, void(^authRet)(BOOL success, NSString *errMsg)))authCallback
+//{
+//    _merchantId = merchantId;
+//    _authCallback = authCallback;
+//}
+
+-(void)setMerchantId:(NSString*)merchantId authUrl:(NSString*)authUrl
 {
     _merchantId = merchantId;
-    _authCallback = authCallback;
+    _authUrl = authUrl;
 }
 
 -(PKPaymentRequest *)paymentRequest:(NSDictionary *)data
@@ -101,18 +109,27 @@ static UIViewController* currentViewController()
 
 - (void)paymentAuthorizationViewController:(PKPaymentAuthorizationViewController *)controller didAuthorizePayment:(PKPayment *)payment completion:(void (^)(PKPaymentAuthorizationStatus status))completion
 {
-    __weak typeof(self) wself = self;
-    _authCallback(payment.token.paymentData, ^(BOOL success, NSString* errMsg) {
-        __strong typeof(self) sself = wself;
-        if (sself) {
-            sself->_paySuccess = success;
-        }
+//    __weak typeof(self) wself = self;
+//    _authCallback(payment.token.paymentData, ^(BOOL success, NSString *errMsg) {
+//        __strong typeof(self) sself = wself;
+//        if (sself) {
+//            sself->_paySuccess = success;
+//        }
+//        if (success) {
+//            completion(PKPaymentAuthorizationStatusSuccess);
+//        }else {
+//            completion(PKPaymentAuthorizationStatusFailure);
+//        }
+//    });
+    
+    [self postToken:payment.token.paymentData callback:^(BOOL success, NSString *errMsg) {
+        self->_paySuccess = success;
         if (success) {
             completion(PKPaymentAuthorizationStatusSuccess);
         }else {
             completion(PKPaymentAuthorizationStatusFailure);
         }
-    });
+    }];
 }
 
 - (void)paymentAuthorizationViewControllerDidFinish:(PKPaymentAuthorizationViewController *)controller
@@ -120,6 +137,59 @@ static UIViewController* currentViewController()
     [controller dismissViewControllerAnimated:YES completion:^{
         self->_callback(self->_paySuccess);
     }];
+}
+
+
+-(void)postToken:(NSData*)token callback:(void(^)(BOOL success, NSString *errMsg))callback
+{
+    static NSString *resultKey = @"paymentResult";
+    static NSString *codeKey = @"code";
+    static NSString *massageKey = @"massage";
+    static int successCode = 200;
+    NSString *tokenStr = [[NSString alloc] initWithData:token encoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:_authUrl];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    request.HTTPMethod = @"POST";
+    NSString *args = [NSString stringWithFormat:@"paymentResult=%@&paymentResult_code=%@&paymentResult_message=%@&successCode =%d&paymentData=%@", resultKey, codeKey, massageKey, successCode, tokenStr];
+    request.HTTPBody = [args dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.timeoutIntervalForRequest = 5;
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration delegate:self delegateQueue:[[NSOperationQueue alloc]init]];
+    
+    NSURLSessionDataTask *sessionDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:(NSJSONReadingMutableLeaves) error:nil];
+        bool b = NO;
+        NSString *errMsg;
+        if (!error) {
+            NSDictionary *result = dict[resultKey];
+            if ([result isKindOfClass:[NSDictionary class]]) {
+                int code = [result[@"code"] intValue];
+                b = code == successCode;
+                if (!b) {
+                    errMsg = result[@"message"];
+                }
+            }else {
+                errMsg = @"服务器未知错误";
+            }
+        }else {
+            errMsg = error.domain;
+        }
+        callback(b, errMsg);
+    }];
+    [sessionDataTask resume];
+}
+
+- (void)URLSession:(NSURLSession *)session didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition, NSURLCredential * _Nullable))completionHandler
+{
+    if([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]){
+        NSURLCredential *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+        if(completionHandler)
+            completionHandler(NSURLSessionAuthChallengeUseCredential,credential);
+    }
 }
 
 @end

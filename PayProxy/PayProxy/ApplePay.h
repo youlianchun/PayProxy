@@ -12,8 +12,8 @@
 @interface ApplePay : Singleton
 +(instancetype)share;
 
--(void)setMerchantId:(NSString*)merchantId serverAuth:(void(^)(NSData *token, void(^authRet)(BOOL success, NSString* errMsg)))authCallback;
-
+//-(void)setMerchantId:(NSString*)merchantId serverAuth:(void(^)(NSData *token, void(^authRet)(BOOL success, NSString *errMsg)))authCallback;
+-(void)setMerchantId:(NSString*)merchantId authUrl:(NSString*)authUrl;
 /**
  <#Description#>
 

@@ -24,26 +24,27 @@ static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
 -(void)registerPayProxy {
     [PayProxy registerWXAppKey:kWxPayKey];
     [PayProxy registerAliAppKey:kAliPayKey];
+    [[ApplePay share] setMerchantId:@"com.ylchun.PayProxy" authUrl:@"https://payproxy.com.cn/auth"];
     
-    [[ApplePay share] setMerchantId:@"com.ylchun.PayProxy" serverAuth:^(NSData *token, void (^authRet)(BOOL success, NSString *errMsg)) {
-        [self uploadApplePayToken:token callback:^(BOOL success, NSDictionary *ret) {
-            bool b = NO;
-            NSString *err;
-            if (success) {
-                int code = [ret[@"code"] intValue];
-                b = code == 200;
-                if (!b) {
-                    err = ret[@"message"];
-                }
-            }
-            authRet(b, err);
-        }];
-    }];
+//    [[ApplePay share] setMerchantId:@"com.ylchun.PayProxy" serverAuth:^(NSData *token, void (^authRet)(BOOL success, NSString *errMsg)) {
+//        [self uploadApplePayToken:token callback:^(BOOL success, NSDictionary *ret) {
+//            bool b = NO;
+//            NSString *err;
+//            if (success) {
+//                int code = [ret[@"code"] intValue];
+//                b = code == 200;
+//                if (!b) {
+//                    err = ret[@"message"];
+//                }
+//            }
+//            authRet(b, err);
+//        }];
+//    }];
 }
 
--(void)uploadApplePayToken:(NSData*)token callback:(void(^)(BOOL success, NSDictionary *ret))callback {
-    callback(YES, @{@"code":@(200), @"message":@"success"});
-}
+//-(void)uploadApplePayToken:(NSData*)token callback:(void(^)(BOOL success, NSDictionary *ret))callback {
+//    callback(YES, @{@"code":@(200), @"message":@"success"});
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self registerPayProxy];
