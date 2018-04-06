@@ -5,6 +5,7 @@
 //  Created by YLCHUN on 2018/4/6.
 //  Copyright © 2018年 YLCHUN. All rights reserved.
 //
+//  服务器未对接调试
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
