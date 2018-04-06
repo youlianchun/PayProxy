@@ -16,6 +16,8 @@
 		A9C03B882071D9A900B969CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9C03B872071D9A900B969CB /* Assets.xcassets */; };
 		A9C03B8B2071D9A900B969CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9C03B892071D9A900B969CB /* LaunchScreen.storyboard */; };
 		A9C03B8E2071D9A900B969CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C03B8D2071D9A900B969CB /* main.m */; };
+		A9FAB81820771B94008D37FC /* ApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FAB81720771B94008D37FC /* ApplePay.m */; };
+		A9FAB81A20771CC7008D37FC /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9FAB81920771CC7008D37FC /* PassKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,9 @@
 		A9C03B8A2071D9A900B969CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9C03B8C2071D9A900B969CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9C03B8D2071D9A900B969CB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A9FAB81620771B94008D37FC /* ApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplePay.h; sourceTree = "<group>"; };
+		A9FAB81720771B94008D37FC /* ApplePay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplePay.m; sourceTree = "<group>"; };
+		A9FAB81920771CC7008D37FC /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9FAB81A20771CC7008D37FC /* PassKit.framework in Frameworks */,
 				8AD525218DB7E4FB7FE56E20 /* libPods-PayProxy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +60,7 @@
 		132E191550C1F2CD6296692E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A9FAB81920771CC7008D37FC /* PassKit.framework */,
 				23861FFDDA34758300AB2D73 /* libPods-PayProxy.a */,
 			);
 			name = Frameworks;
@@ -75,6 +82,8 @@
 				A951565820720CD60096ED9B /* Singleton.mm */,
 				A951565B20720CD60096ED9B /* PayProxy.h */,
 				A951565A20720CD60096ED9B /* PayProxy.m */,
+				A9FAB81620771B94008D37FC /* ApplePay.h */,
+				A9FAB81720771B94008D37FC /* ApplePay.m */,
 			);
 			path = PayProxy;
 			sourceTree = "<group>";
@@ -245,6 +254,7 @@
 				A951565C20720CD60096ED9B /* Singleton.mm in Sources */,
 				A951565D20720CD60096ED9B /* PayProxy.m in Sources */,
 				A9C03B832071D9A800B969CB /* ViewController.m in Sources */,
+				A9FAB81820771B94008D37FC /* ApplePay.m in Sources */,
 				A9C03B8E2071D9A900B969CB /* main.m in Sources */,
 				A9C03B802071D9A800B969CB /* AppDelegate.m in Sources */,
 			);

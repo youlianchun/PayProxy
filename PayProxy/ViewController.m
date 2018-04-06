@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "PayProxy.h"
+#import "ApplePay.h"
 
 @interface ViewController ()
 
@@ -21,7 +22,7 @@
 }
 
 - (void)wxPay {
-    NSDictionary *signData = @{};//服务器签名后的数据
+    NSDictionary *signData = @{@"partnerid":@"", @"prepayid":@"", @"package":@"", @"noncestr":@"", @"timestamp":@"", @"sign":@""};//服务器签名后的数据
     [PayProxy wxPay:signData callback:^(BOOL success) {
         if (success) {
             //支付成功 ...
@@ -42,4 +43,14 @@
     }];
 }
 
+-(void)applePay {
+    NSDictionary *orderData = @{@"orderNum":@"123456", @"amount":@"100.0", @"merchantName":@"商户名称"};
+    [[ApplePay share] aplePay:orderData callback:^(BOOL success) {
+        if (success) {
+            //支付成功 ...
+        }else {
+            //支付失败 ...
+        }
+    }];
+}
 @end
