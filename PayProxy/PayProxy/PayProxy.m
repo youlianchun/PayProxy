@@ -200,13 +200,9 @@ static NSString * const kverify = @"verify";
 
 -(BOOL)verify_9n
 {
-//    if (@available(iOS 9.0, *)) {
-       return [self verify:@selector(application:openURL:options:) perform:^(UIApplication *application, NSURL *url) {
-           [application.delegate application:application openURL:url options:@{}];
-        }];
-//    } else {
-//        return YES;
-//    }
+   return [self verify:@selector(application:openURL:options:) perform:^(UIApplication *application, NSURL *url) {
+       [application.delegate application:application openURL:url options:@{}];
+    }];
 }
 
 -(BOOL)verify:(SEL)sel perform:(void(^)(UIApplication *application, NSURL *url))perform
