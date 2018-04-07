@@ -55,3 +55,11 @@
  */
 +(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback;
 @end
+
+
+@interface PayProxy (defaultHandle)
+/**
+ 采用默认处理通过URL启动App时传递的数据，不需要执行 +[PayProxy handleOpenURL:]
+ */
++(void)defaultHandleOpenURL;
+@end

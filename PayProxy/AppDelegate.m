@@ -22,8 +22,11 @@ static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
 
 
 -(void)registerPayProxy {
+    [PayProxy defaultHandleOpenURL];
+    
     [PayProxy registerWXAppKey:kWxPayKey];
     [PayProxy registerAliAppKey:kAliPayKey];
+    
     [[ApplePay share] setMerchantId:@"com.ylchun.PayProxy" authUrl:@"https://payproxy.com.cn/auth"];
     
 //    [[ApplePay share] setMerchantId:@"com.ylchun.PayProxy" serverAuth:^(NSData *token, void (^authRet)(BOOL success, NSString *errMsg)) {
@@ -53,24 +56,21 @@ static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
     return YES;
 }
 
-#pragma mark - UIApplicationDelegate openURL
-
-// 4_2 ~ 9_0
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [self handleOpenURL:url];
-}
-// 9_0 ~
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
-    return [self handleOpenURL:url];
-}
-
-#pragma mark -
-
-- (BOOL)handleOpenURL:(NSURL*)url {
-    if ([PayProxy handleOpenURL:url]) return YES;
-    //other ...
-    return YES;
-}
+//#pragma mark - UIApplicationDelegate openURL
+//// 2_0 ~ 9_0
+//-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    if ([PayProxy handleOpenURL:url]) return YES;
+//    //other ...
+//    return YES;
+//}
+//// 4_2 ~ 9_0
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+//    return [self application:application handleOpenURL:url];
+//}
+//// 9_0 ~
+//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options {
+//    return [self application:application handleOpenURL:url];
+//}
 
 @end
 

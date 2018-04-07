@@ -163,6 +163,7 @@ static NSString * const kaliPay = @"aliPay";
 
 @end
 
+
 #pragma mark - verify 接入校验
 
 @implementation PayProxy (verify)
@@ -189,12 +190,12 @@ static NSString * const kverify = @"verify";
         [application.delegate application:application handleOpenURL:url];
     }];
     if (v_29) return YES;
-    
+
     BOOL v_49 = [self verify:@selector(application:openURL:sourceApplication:annotation:) perform:^(UIApplication *application, NSURL *url) {
         [application.delegate application:application openURL:url sourceApplication:@"" annotation:[NSNull new]];
     }];
     if (v_49) return YES;
-    
+
     return NO;
 }
 
@@ -229,13 +230,15 @@ static NSString * const kverify = @"verify";
 
 @end
 
+
 #pragma mark - extension 方法扩展
 @implementation PayProxy (extension)
 +(instancetype)share {
     return [[self alloc] init];
 }
+
 +(BOOL)handleOpenURL:(NSURL *) url {
-    if ([[PayProxy share] handleOpenURL:url])  return YES;
+    if ([[PayProxy share] handleOpenURL:url]) return YES;
     if ([[PayProxy share] verifyHandleOpenURL:url]) return YES;
     return NO;
 }
@@ -254,5 +257,3 @@ static NSString * const kverify = @"verify";
     [[PayProxy share] aliPay:signData callback:callback];
 }
 @end
-
-
