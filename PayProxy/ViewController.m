@@ -43,14 +43,4 @@
     }];
 }
 
--(void)applePay {
-    NSDictionary *orderData = @{@"orderNum":@"123456", @"amount":@"100.0", @"merchantName":@"商户名称"};
-    [[ApplePay share] aplePay:orderData callback:^(BOOL success) {
-        if (success) {
-            //支付成功 ...
-        }else {
-            //支付失败 ...
-        }
-    }];
-}
 @end

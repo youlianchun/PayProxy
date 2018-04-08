@@ -34,7 +34,8 @@
 +(void)_onceInit
 {
     static SEL sel = @selector(init);
-    IMP init = method_getImplementation(class_getInstanceMethod(self, sel));
+    Method method = class_getInstanceMethod(self, sel);
+    IMP init = method_getImplementation(method);
     IMP block = imp_implementationWithBlock(^id(Singleton *self) {
         static std::mutex initLock;
         std::lock_guard<std::mutex> lock(initLock);
@@ -43,7 +44,7 @@
         }
         return self;
     });
-    class_replaceMethod(self, sel, block, "@:");
+    class_replaceMethod(self, sel, block, method_getTypeEncoding(method));
 }
 
 -(id)copyWithZone:(NSZone *)zone {

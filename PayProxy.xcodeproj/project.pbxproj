@@ -18,7 +18,6 @@
 		A9C03B8E2071D9A900B969CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A9C03B8D2071D9A900B969CB /* main.m */; };
 		A9FAB81820771B94008D37FC /* ApplePay.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FAB81720771B94008D37FC /* ApplePay.m */; };
 		A9FAB81A20771CC7008D37FC /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9FAB81920771CC7008D37FC /* PassKit.framework */; };
-		A9FAB82020790B1D008D37FC /* PayProxy+defaultHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = A9FAB81F20790B1D008D37FC /* PayProxy+defaultHandle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,7 +42,6 @@
 		A9FAB81620771B94008D37FC /* ApplePay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplePay.h; sourceTree = "<group>"; };
 		A9FAB81720771B94008D37FC /* ApplePay.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ApplePay.m; sourceTree = "<group>"; };
 		A9FAB81920771CC7008D37FC /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
-		A9FAB81F20790B1D008D37FC /* PayProxy+defaultHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "PayProxy+defaultHandle.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +82,6 @@
 				A951565820720CD60096ED9B /* Singleton.mm */,
 				A951565B20720CD60096ED9B /* PayProxy.h */,
 				A951565A20720CD60096ED9B /* PayProxy.m */,
-				A9FAB81F20790B1D008D37FC /* PayProxy+defaultHandle.m */,
 				A9FAB81620771B94008D37FC /* ApplePay.h */,
 				A9FAB81720771B94008D37FC /* ApplePay.m */,
 			);
@@ -259,7 +256,6 @@
 				A9C03B832071D9A800B969CB /* ViewController.m in Sources */,
 				A9FAB81820771B94008D37FC /* ApplePay.m in Sources */,
 				A9C03B8E2071D9A900B969CB /* main.m in Sources */,
-				A9FAB82020790B1D008D37FC /* PayProxy+defaultHandle.m in Sources */,
 				A9C03B802071D9A800B969CB /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
