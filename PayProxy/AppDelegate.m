@@ -8,11 +8,6 @@
 
 #import "AppDelegate.h"
 #import "PayProxy.h"
-#import "ApplePay.h"
-
-// 全局查找替换 (shift + command + f)
-static NSString * const kAliPayKey = @"aliPayOpen";
-static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
 
 @interface AppDelegate ()
 
@@ -20,18 +15,19 @@ static NSString * const kWxPayKey = @"wx73acdf06232c6a33";
 
 @implementation AppDelegate
 
-
--(void)registerPayProxy {
-    [PayProxy registerWXAppKey:kWxPayKey];
-    [PayProxy registerAliAppKey:kAliPayKey];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self registerPayProxy];
-    
-    //other ...
     return YES;
 }
 
 @end
 
+
+@implementation AppDelegate (pay)
++(void)load {
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [PayProxy registerWXAppKey:@"wx73acdf06232c6a33"];
+        [PayProxy registerAliAppKey:@"aliPayOpen"];
+    });
+}
+@end
