@@ -9,6 +9,7 @@
 #import "PayProxy.h"
 #import <AlipaySDK/AlipaySDK.h>
 #import "WXApi.h"
+#import "InterceptHandleOpenURL.h"
 
 static NSString * const kwxPay = @"wxPay";
 static NSString * const kaliPay = @"aliPay";
@@ -163,80 +164,6 @@ static NSString * const kaliPay = @"aliPay";
 
 @end
 
-#pragma mark - interceptHandleOpenURL
-
-#import <objc/runtime.h>
-typedef BOOL(*IMP_29)(id, SEL, UIApplication *, NSURL *);
-typedef BOOL(*IMP_49)(id, SEL, UIApplication *, NSURL *, NSString *, id);
-typedef BOOL(*IMP_9n)(id, SEL, UIApplication *, NSURL *, NSDictionary *);
-
-static void replaceMethod(Class cls, SEL sel, id(^getBlock)(IMP imp))
-{
-    Method method = class_getInstanceMethod(cls, sel);
-    IMP imp = method_getImplementation(class_getInstanceMethod(cls, sel));
-    IMP block = imp_implementationWithBlock(getBlock(imp));
-    class_replaceMethod(cls, sel, block, method_getTypeEncoding(method));
-}
-
-static void interceptHandleOpenURL(BOOL(^handle)(NSURL *url))
-{
-    if (!handle) return;
-    
-    id<UIApplicationDelegate> delegate = [UIApplication sharedApplication].delegate;
-    Class cls = [delegate class];
-    SEL sel_29 = @selector(application:handleOpenURL:);
-    SEL sel_49 = @selector(application:openURL:sourceApplication:annotation:);
-    SEL sel_9n = @selector(application:openURL:options:);
-    
-    BOOL has_sel_29 = [delegate respondsToSelector:sel_29];
-    BOOL has_sel_49 = [delegate respondsToSelector:sel_49];
-    BOOL has_sel_9n = [delegate respondsToSelector:sel_9n];
-    
-    if (has_sel_29) {
-        replaceMethod(cls, sel_29, ^id(IMP imp) {
-            return ^BOOL(id self, UIApplication *application, NSURL *url) {
-                if (handle(url)) return YES;
-                return ((IMP_29)imp)(self, sel_29, application, url);
-            };
-        });
-    }
-    else if (!has_sel_49) {
-        IMP block = imp_implementationWithBlock(^BOOL(id self, UIApplication *application, NSURL *url) {
-            return handle(url);
-        });
-        class_addMethod(cls, sel_29, block, "B@:@@");
-    }
-    
-    if (has_sel_49) {
-        replaceMethod(cls, sel_49, ^id(IMP imp) {
-            return ^BOOL(id self, UIApplication *application, NSURL *url, NSString *sourceApplication, id annotation) {
-                if (handle(url)) return YES;
-                return ((IMP_49)imp)(self, sel_49, application, url, sourceApplication, annotation);
-            };
-        });
-    }
-    else if (!has_sel_29) {
-        IMP block = imp_implementationWithBlock(^BOOL(id self, UIApplication *application, NSURL *url, NSString *sourceApplication, id annotation) {
-            return handle(url);
-        });
-        class_addMethod(cls, sel_49, block, "B@:@@@@");
-    }
-    
-    if (has_sel_9n) {
-        replaceMethod(cls, sel_9n, ^id(IMP imp) {
-            return ^BOOL(id self, UIApplication *application, NSURL *url, NSDictionary *options) {
-                if (handle(url)) return YES;
-                return ((IMP_9n)imp)(self, sel_9n, application, url, options);
-            };
-        });
-    }
-    else {
-        IMP block = imp_implementationWithBlock(^BOOL(id self, UIApplication *application, NSURL *url, NSDictionary *options) {
-            return handle(url);
-        });
-        class_addMethod(cls, sel_9n, block, "B@:@@@");
-    }
-}
 
 #pragma mark - extension 方法扩展
 @implementation PayProxy (extension)
@@ -244,12 +171,11 @@ static void interceptHandleOpenURL(BOOL(^handle)(NSURL *url))
     return [[self alloc] init];
 }
 
-+(void)defaultHandleOpenURL
-{
++(void)defaultHandleOpenURL {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         interceptHandleOpenURL(^BOOL(NSURL *url) {
-            return [PayProxy handleOpenURL:url];
+            return [self handleOpenURL:url];
         });
     });
 }
