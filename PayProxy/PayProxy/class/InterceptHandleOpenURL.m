@@ -16,7 +16,7 @@ static IMP blockImp(HandleURL handle, IMP imp, SEL sel)
         if (imp && sel) {
             va_list args;
             va_start(args, url);
-            BOOL b = ((BOOL(*)(id, SEL, ...))imp)(self, sel, application, url, va_arg(args, id), va_arg(args, id));
+            BOOL b = ((BOOL(*)(id, SEL, ...))imp)(self, sel, application, url, va_arg(args, void*), va_arg(args, void*));
             va_end(args);
             return b;
         }
@@ -29,60 +29,74 @@ static void replaceHandle(Class cls, SEL sel, HandleURL handle)
     Method method = class_getInstanceMethod(cls, sel);
     IMP imp = method_getImplementation(method);
     IMP block = blockImp(handle, imp, sel);
-    class_replaceMethod(cls, sel, block, method_getTypeEncoding(method));
+    method_setImplementation(method, block);
 }
 
-static void addHandle(Class cls, SEL sel, HandleURL handle, const char * types)
+static void addHandle(Class cls, SEL sel, HandleURL handle)
 {
+    Protocol *proto = @protocol(UIApplicationDelegate);
+    struct objc_method_description desc = protocol_getMethodDescription(proto, sel, NO, YES);
     IMP block = blockImp(handle, NULL, NULL);
-    class_addMethod(cls, sel, block, types);
+    class_addMethod(cls, sel, block, desc.types);
 }
 
 static void interceptHandle(HandleURL handle)
 {
-    if (!handle) return;
+    Class cls = object_getClass(UIApplication.sharedApplication.delegate);
     
-    id<UIApplicationDelegate> delegate = [UIApplication sharedApplication].delegate;
-    
-    Class cls = [delegate class];
     SEL sel_29 = @selector(application:handleOpenURL:);
     SEL sel_49 = @selector(application:openURL:sourceApplication:annotation:);
     SEL sel_9n = @selector(application:openURL:options:);
     
-    BOOL has_sel_29 = [delegate respondsToSelector:sel_29];
-    BOOL has_sel_49 = [delegate respondsToSelector:sel_49];
-    BOOL has_sel_9n = [delegate respondsToSelector:sel_9n];
+    BOOL has_sel_29 = class_respondsToSelector(cls, sel_29);
+    BOOL has_sel_49 = class_respondsToSelector(cls, sel_49);
+    BOOL has_sel_9n = class_respondsToSelector(cls, sel_9n);
     
     if (has_sel_29) {
         replaceHandle(cls, sel_29, handle);
     }
     else if (!has_sel_49) {
-        addHandle(cls, sel_29, handle, "B@:@@");
+        addHandle(cls, sel_29, handle);
     }
     
     if (has_sel_49) {
         replaceHandle(cls, sel_49, handle);
     }
     else if (!has_sel_29) {
-        addHandle(cls, sel_49, handle, "B@:@@@@");
+        addHandle(cls, sel_49, handle);
     }
     
     if (has_sel_9n) {
         replaceHandle(cls, sel_9n, handle);
     }
     else {
-        addHandle(cls, sel_9n, handle, "B@:@@@");
+        addHandle(cls, sel_9n, handle);
     }
+}
+
+static dispatch_queue_t listeningQueue()
+{
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("listening", NULL);
+    });
+    return queue;
 }
 
 void interceptHandleOpenURL(HandleURL handle)
 {
     if (!handle) return;
-    if ([UIApplication sharedApplication]) {
+    
+    if (UIApplication.sharedApplication) {
         interceptHandle(handle);
-    }else {
-        [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationDidFinishLaunchingNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            interceptHandle(handle);
-        }];
+    }
+    else {
+        dispatch_async(listeningQueue(), ^{
+            while (!UIApplication.sharedApplication) {}
+            dispatch_async(dispatch_get_main_queue(), ^{
+                interceptHandle(handle);
+            });
+        });
     }
 }
