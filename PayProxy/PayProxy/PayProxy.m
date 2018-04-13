@@ -171,26 +171,15 @@ static NSString * const kaliPay = @"aliPay";
     return [[self alloc] init];
 }
 
-+(void)defaultHandleOpenURL {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        interceptHandleOpenURL(^BOOL(NSURL *url) {
-            return [self handleOpenURL:url];
-        });
-    });
-}
-
 +(BOOL)handleOpenURL:(NSURL *) url {
     if ([[PayProxy share] handleOpenURL:url]) return YES;
     return NO;
 }
 +(void)registerWXAppKey:(NSString *)appKey {
     [[PayProxy share] registerWXAppKey:appKey];
-    [self defaultHandleOpenURL];
 }
 +(void)registerAliAppKey:(NSString *)appKey {
     [[PayProxy share] registerAliAppKey:appKey];
-    [self defaultHandleOpenURL];
 }
 +(void)wxPay:(NSDictionary*)signData callback:(void(^)(BOOL success))callback {
     [[PayProxy share] wxPay:signData callback:callback];
@@ -198,4 +187,20 @@ static NSString * const kaliPay = @"aliPay";
 +(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback {
     [[PayProxy share] aliPay:signData callback:callback];
 }
+
++(void)load
+{
+    return;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        dispatch_queue_t queue = dispatch_queue_create("listening", NULL);
+        dispatch_async(queue, ^{
+            while (!UIApplication.sharedApplication) {}
+            interceptHandleOpenURL(^BOOL(NSURL *url) {
+                return YES;
+            });
+        });
+    });
+}
 @end
+

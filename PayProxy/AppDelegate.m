@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PayProxy.h"
+#import <objc/runtime.h>
 
 @interface AppDelegate ()
 
@@ -15,19 +16,24 @@
 
 
 @implementation AppDelegate
-
+-(BOOL)respondsToSelector:(SEL)aSelector {
+    if (sel_isEqual(@selector(application:handleOpenURL:), aSelector)) {
+        NSLog(@"");
+    }
+    return [super respondsToSelector:aSelector];
+}
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
 }
 
 //Safair打来 payProxy://
-//-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-//    return YES;
-//}
-
--(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+-(BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return YES;
 }
+
+//-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+//    return YES;
+//}
 
 //-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 //    return YES;

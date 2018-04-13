@@ -11,13 +11,10 @@
 
 static IMP blockImp(HandleURL handle, IMP imp, SEL sel)
 {
-    return imp_implementationWithBlock(^BOOL(id self, UIApplication *application, NSURL *url, ...) {
+    return imp_implementationWithBlock(^BOOL(id self, UIApplication *application, NSURL *url,  void* op0, void* op1) {
         if (handle(url)) return YES;
         if (imp && sel) {
-            va_list args;
-            va_start(args, url);
-            BOOL b = ((BOOL(*)(id, SEL, ...))imp)(self, sel, application, url, va_arg(args, void*), va_arg(args, void*));
-            va_end(args);
+            BOOL b = ((BOOL(*)(id, SEL, ...))imp)(self, sel, application, url, op0, op1);
             return b;
         }
         return NO;
@@ -29,7 +26,7 @@ static void replaceHandle(Class cls, SEL sel, HandleURL handle)
     Method method = class_getInstanceMethod(cls, sel);
     IMP imp = method_getImplementation(method);
     IMP block = blockImp(handle, imp, sel);
-    method_setImplementation(method, block);
+    class_replaceMethod(cls, sel, block, method_getTypeEncoding(method));
 }
 
 static void addHandle(Class cls, SEL sel, HandleURL handle)
@@ -69,34 +66,15 @@ static void interceptHandle(HandleURL handle)
     if (has_sel_9n) {
         replaceHandle(cls, sel_9n, handle);
     }
-    else {
+    else if(!has_sel_49 && !has_sel_29) {
         addHandle(cls, sel_9n, handle);
     }
-}
-
-static dispatch_queue_t listeningQueue()
-{
-    static dispatch_queue_t queue;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        queue = dispatch_queue_create("listening", NULL);
-    });
-    return queue;
 }
 
 void interceptHandleOpenURL(HandleURL handle)
 {
     if (!handle) return;
-    
-    if (UIApplication.sharedApplication) {
-        interceptHandle(handle);
-    }
-    else {
-        dispatch_async(listeningQueue(), ^{
-            while (!UIApplication.sharedApplication) {}
-            dispatch_async(dispatch_get_main_queue(), ^{
-                interceptHandle(handle);
-            });
-        });
-    }
+    interceptHandle(handle);
 }
+
+
