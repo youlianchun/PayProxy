@@ -45,6 +45,7 @@
  @param callback 支付回调
  */
 +(void)aliPay:(NSString*)signData callback:(void(^)(BOOL success))callback;
+
 @end
 
 

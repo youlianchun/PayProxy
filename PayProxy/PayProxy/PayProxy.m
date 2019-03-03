@@ -190,14 +190,13 @@ static NSString * const kaliPay = @"aliPay";
 
 +(void)load
 {
-    return;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dispatch_queue_t queue = dispatch_queue_create("listening", NULL);
         dispatch_async(queue, ^{
             while (!UIApplication.sharedApplication) {}
             interceptHandleOpenURL(^BOOL(NSURL *url) {
-                return YES;
+                return [self handleOpenURL:url];
             });
         });
     });
