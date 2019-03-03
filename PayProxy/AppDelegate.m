@@ -42,7 +42,7 @@
 @end
 
 @implementation AppDelegate (pay)
-+(void)load {
++(void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [PayProxy registerWXAppKey:@"wx73acdf06232c6a33"];

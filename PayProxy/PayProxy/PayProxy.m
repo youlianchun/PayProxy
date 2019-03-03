@@ -188,8 +188,8 @@ static NSString * const kaliPay = @"aliPay";
     [[PayProxy share] aliPay:signData callback:callback];
 }
 
-+(void)load
-{
+
++(void)initialize {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         dispatch_queue_t queue = dispatch_queue_create("listening", NULL);
@@ -201,5 +201,6 @@ static NSString * const kaliPay = @"aliPay";
         });
     });
 }
+
 @end
 
